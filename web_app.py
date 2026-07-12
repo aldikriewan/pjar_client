@@ -158,4 +158,4 @@ def proxy_video(filename):
 if __name__ == "__main__":
     print(f"[PJAR Client] Menyajikan UI web di http://localhost:{CLIENT_PORT}")
     print(f"[PJAR Client] Terhubung ke backend: {SERVER_URL}")
-    app.run(debug=True, host="0.0.0.0", port=CLIENT_PORT)
+    app.run(debug=True, use_reloader=False, host="0.0.0.0", port=CLIENT_PORT)
