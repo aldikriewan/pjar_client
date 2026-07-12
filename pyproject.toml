@@ -1,2 +1,14 @@
+[project]
+name = "pjar-client"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "Flask>=3.0,<4.0",
+    "python-dotenv>=1.0,<2.0",
+]
+
+[tool.uv]
+package = false
+
 [tool.vercel]
 entrypoint = "web_app:app"
