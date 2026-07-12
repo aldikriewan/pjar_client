@@ -1,0 +1,3 @@
+[submodule "pjar_server"]
+	path = pjar_server
+	url = https://github.com/aldikriewan/pjar_server.git
