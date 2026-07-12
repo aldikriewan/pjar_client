@@ -40,10 +40,11 @@ if not exist .env (
 echo.
 echo ===== Setup Complete! =====
 echo.
-echo To run the client:
+echo To run the WEB client (browser-based):
 echo 1. Open Command Prompt in this folder
 echo 2. Run: venv\Scripts\activate
-echo 3. Run: python app.py
+echo 3. Run: python web_app.py
+echo 4. Buka browser: http://localhost:5001
 echo.
 echo Before first run:
 echo - Edit .env with your server URL

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aplikasi PJAR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <h1>Portal Aplikasi PJAR</h1>
+        <p>Integrasi login, verifikasi email, upload file via TCP, dan streaming video via UDP dalam satu website.</p>
+      </section>
+
+      <div id="status" class="status-bar">Mengecek server...</div>
+
+      <ul id="flash-list" class="flash-list" hidden></ul>
+
+      <section class="overview">
+        <div class="chip">UI berbasis web</div>
+        <div class="chip">Sistem login</div>
+        <div class="chip">Email verifikasi</div>
+        <div class="chip">TCP upload file</div>
+        <div class="chip">UDP streaming</div>
+      </section>
+
+      <!-- Login & Register (tampil saat belum login) -->
+      <section id="auth-view" class="card auth-grid">
+        <div>
+          <h2>Login Pengguna</h2>
+          <form id="login-form">
+            <label>Username</label>
+            <input name="username" required />
+            <label>Password</label>
+            <input name="password" type="password" required />
+            <button type="submit">Masuk</button>
+          </form>
+        </div>
+        <div>
+          <h2>Buat Akun Baru</h2>
+          <form id="register-form">
+            <label>Username</label>
+            <input name="username" required />
+            <label>Password</label>
+            <input name="password" type="password" required />
+            <label>Email</label>
+            <input name="email" type="email" placeholder="contoh@email.com" required />
+            <button type="submit">Daftar</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Verifikasi (tampil setelah login, sebelum terverifikasi) -->
+      <section id="verify-view" class="card" hidden>
+        <h2>Verifikasi Email</h2>
+        <p id="verify-email-hint">Kode verifikasi telah dikirim ke email Anda setelah login.</p>
+        <form id="verify-form">
+          <label>Kode verifikasi</label>
+          <input name="code" required />
+          <button type="submit">Verifikasi</button>
+        </form>
+        <p id="verify-result" class="result" hidden></p>
+      </section>
+
+      <!-- Dashboard (tampil setelah login) -->
+      <section id="dashboard-view" hidden>
+        <section class="card dashboard-top">
+          <div>
+            <h2>Halo, <span id="session-user">!</span></h2>
+            <p>Status verifikasi: <span id="verify-status">Belum terverifikasi</span></p>
+          </div>
+          <a class="link" href="#" id="logout-btn">Keluar</a>
+        </section>
+
+        <section class="card dashboard-grid">
+          <div class="panel">
+            <h3>Upload File via TCP</h3>
+            <p>Transfer file ke server dengan protokol TCP yang andal.</p>
+            <form id="upload-form">
+              <input id="file-input" type="file" name="file" required />
+              <button type="submit">Upload</button>
+            </form>
+            <p id="upload-result" class="result" hidden></p>
+          </div>
+
+          <div class="panel">
+            <h3>Streaming Video via UDP</h3>
+            <p>Kirim sinyal streaming ke server (protokol UDP), lalu putar video dari folder server.</p>
+            <button id="stream-button" type="button">Mulai Streaming (UDP)</button>
+            <p id="stream-result" class="result" hidden></p>
+
+            <hr class="divider" />
+            <h4>Video di Server</h4>
+            <ul id="video-list" class="video-list"></ul>
+            <video id="video-player" class="video-player" controls preload="metadata" hidden></video>
+            <p id="video-result" class="result" hidden></p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
