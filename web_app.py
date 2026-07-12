@@ -31,7 +31,7 @@ SERVER_URL = os.environ.get("SERVER_URL", "http://192.168.1.12:5000")
 CLIENT_PORT = int(os.environ.get("CLIENT_PORT", 5001))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+TEMPLATES_DIR = BASE_DIR
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)

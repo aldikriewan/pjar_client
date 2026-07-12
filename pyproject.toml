@@ -9,6 +9,3 @@ dependencies = [
 
 [tool.uv]
 package = false
-
-[tool.vercel]
-entrypoint = "web_app:app"

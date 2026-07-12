@@ -7,6 +7,14 @@ const state = {
 
 const $ = (id) => document.getElementById(id);
 
+// API base: relatif (proxy lokal) kalau di localhost,
+// langsung ke backend Ubuntu lewat Cloudflare kalau di-host publik.
+const API_BASE =
+  location.hostname === "localhost" || location.hostname === "127.0.0.1"
+    ? ""
+    : "https://alwan-server.sinarplastik.page";
+const api = (p) => API_BASE + p;
+
 // ===================== Feedback (flash-list seperti pjar_web) =====================
 function flash(message, type = "info") {
   const list = $("flash-list");
@@ -31,7 +39,7 @@ function setStatus(ok, text) {
 
 async function checkServer() {
   try {
-    const resp = await fetch("/api/health");
+    const resp = await fetch(api("/api/health"));
     if (resp.ok) {
       setStatus(true, "✓ Terhubung ke server");
     } else {
@@ -80,7 +88,7 @@ $("login-form").addEventListener("submit", async (e) => {
     return;
   }
   try {
-    const resp = await fetch("/api/login", {
+    const resp = await fetch(api("/api/login"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -115,7 +123,7 @@ $("register-form").addEventListener("submit", async (e) => {
     return;
   }
   try {
-    const resp = await fetch("/api/register", {
+    const resp = await fetch(api("/api/register"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -142,7 +150,7 @@ $("verify-form").addEventListener("submit", async (e) => {
     return;
   }
   try {
-    const resp = await fetch("/api/verify", {
+    const resp = await fetch(api("/api/verify"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: state.username, code }),
@@ -179,7 +187,7 @@ $("upload-form").addEventListener("submit", async (e) => {
   resultEl.textContent = "Mengirim file...";
   resultEl.hidden = false;
   try {
-    const resp = await fetch("/api/upload", { method: "POST", body: formData });
+    const resp = await fetch(api("/api/upload"), { method: "POST", body: formData });
     const data = await resp.json();
     resultEl.textContent = data.message || data.error || "Gagal mengupload";
     if (resp.ok) flash("Upload berhasil", "ok");
@@ -199,7 +207,7 @@ $("stream-button").addEventListener("click", async () => {
   resultEl.textContent = "Memulai streaming UDP...";
   resultEl.hidden = false;
   try {
-    const resp = await fetch("/api/stream", { method: "POST" });
+    const resp = await fetch(api("/api/stream"), { method: "POST" });
     const data = await resp.json();
     resultEl.textContent = data.message || data.error || "Gagal streaming";
     if (resp.ok) flash("Streaming dimulai", "ok");
@@ -214,7 +222,7 @@ async function loadVideos() {
   const listEl = $("video-list");
   listEl.innerHTML = "";
   try {
-    const resp = await fetch("/api/videos");
+    const resp = await fetch(api("/api/videos"));
     const data = await resp.json();
     const videos = data.videos || [];
     if (!videos.length) {
@@ -236,7 +244,7 @@ async function loadVideos() {
 
 function playVideo(name) {
   const player = $("video-player");
-  player.src = "/videos/" + encodeURIComponent(name);
+  player.src = api("/videos/") + encodeURIComponent(name);
   player.hidden = false;
   player.load();
   player.play().catch(() => {});
